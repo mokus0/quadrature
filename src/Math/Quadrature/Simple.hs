@@ -1,10 +1,10 @@
 {-# LANGUAGE BangPatterns #-}
 -- |Simple quadrature schemes based on repeated subdivision, implemented
--- as function returning series of estimates of the integral.
+-- as functions returning series of estimates of the integral.
 -- 
 -- There is much room for stylistic and usability improvements.  Most notably,
--- some kind of drivers should be written and integral-transforms should be
--- implemented.  Also, it would be nice for the domain of integration to be
+-- some convenient drivers should be written and integrand transformations should
+-- be implemented.  Also, it would be nice for the domain of integration to be
 -- generalized to something like range-sets.
 module Math.Quadrature.Simple where
 
@@ -21,6 +21,7 @@ data Estimate a = Estimate
 
 -- |@trapezoidRule f a b@ computes a sequence of improving estimates of the
 -- integral of f from a to b, using the trapezoid rule.
+trapezoidRule :: (Fractional b, Ord b) => (b -> b) -> b -> b -> [Estimate b]
 trapezoidRule f a b = iterate next first
     where
         first = let h0 = (b - a)
@@ -39,12 +40,14 @@ trapezoidRule f a b = iterate next first
 
 -- |@simpson'sRule f a b@ computes a sequence of improving estimates of the
 -- integral of f from a to b, using Simpson's rule.
+simpson'sRule :: (Fractional b, Ord b) => (b -> b) -> b -> b -> [Estimate b]
 simpson'sRule f a b = 
     [ Estimate n h ((4/3) * s_2n - (1/3) * s_n)
     | Estimate _ _ s_n : Estimate n h s_2n : _ <- tails (trapezoidRule f a b)
     ]
 
 
+midpointRule :: (Fractional a) => (a -> a) -> a -> a -> [Estimate a]
 midpointRule f a b = iterate next first
     where
         h0 = b-a
@@ -61,6 +64,7 @@ midpointRule f a b = iterate next first
 -- series of estimates made by a quadrature rule by fitting an order-@k@ 
 -- polynomial to (stepsize^2, X) and extrapolating to stepsize=0.  @dh@ is
 -- the ratio of stepsizes in successive estimates.
+romberg :: (Fractional a) => Int -> (t -> a -> a -> [Estimate a]) -> t -> a -> a -> [Estimate a]
 romberg k qrule f a b = 
     [ Estimate n h (polyInterp (take k terms) 0)
     | estimates <- tails (qrule f a b)

@@ -10,9 +10,9 @@ maintainer:             James Cook <mokus@deepbondi.net>
 license:                Unspecified
 homepage:               http://code.haskell.org/~mokus/quadrature
 
-category:               Unclassified
-synopsis:               Numerical Integration (AKA quadrature) routines
-description:            Numerical Integration (AKA quadrature) routines.  These
+category:               Math, Numerical
+synopsis:               Numerical integration (AKA quadrature) routines
+description:            Numerical integration (AKA quadrature) routines.  These
                         are presently very simple, just a starting point for
                         any interested developer(s) to tinker with.
 
