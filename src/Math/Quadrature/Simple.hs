@@ -10,6 +10,7 @@ module Math.Quadrature.Simple where
 
 import Data.Bits
 import Data.List
+import Data.Maybe (fromMaybe)
 import Math.Polynomial.Interpolation
 
 data Estimate a = Estimate
@@ -63,7 +64,7 @@ midpointRule f a b = iterate next first
 romberg k qrule f a b = 
     [ Estimate n h (polyInterp (take k terms) 0)
     | estimates <- tails (qrule f a b)
-    , let terms = take k [(maybe (guessH n) (^2) mbH, x) | Estimate n mbH x <- estimates]
+    , let terms = take k [(fromMaybe (guessH n) mbH ^ 2, x) | Estimate n mbH x <- estimates]
           Estimate n h _ = last (take k estimates)
     ]
     where
