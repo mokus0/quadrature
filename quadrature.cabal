@@ -1,0 +1,23 @@
+name:                   quadrature
+version:                0.0.0.1
+stability:              experimental
+
+cabal-version:          >= 1.2
+build-type:             Simple
+
+author:                 James Cook <mokus@deepbondi.net>
+maintainer:             James Cook <mokus@deepbondi.net>
+license:                Unspecified
+homepage:               http://code.haskell.org/~mokus/quadrature
+
+category:               Unclassified
+synopsis:               Numerical Integration (AKA quadrature) routines
+description:            Numerical Integration (AKA quadrature) routines.  These
+                        are presently very simple, just a starting point for
+                        any interested developer(s) to tinker with.
+
+Library
+  hs-source-dirs:       src
+  exposed-modules:      Math.Quadrature.Gaussian
+                        Math.Quadrature.Simple
+  build-depends:        base >= 3, polynomial, vector
