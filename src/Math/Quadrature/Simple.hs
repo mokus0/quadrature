@@ -15,7 +15,7 @@ import Math.Polynomial.Interpolation
 
 data Estimate a = Estimate
     { numPoints :: Integer
-    , stepSize  :: Maybe a  -- Maybe because not all algorithms use equally spaced points
+    , stepSize  :: Maybe a  -- 'Maybe' because not all algorithms use equally spaced points
     , estimate  :: a
     } deriving (Eq, Ord, Show)
 
@@ -60,10 +60,12 @@ midpointRule f a b = iterate next first
                 x0 = a + 0.5 * h
                 ys = take (2 * fromInteger n0) (map f (extension x0 h (h+h)))
 
--- |@romberg k qrule dh f a b@ uses Romberg extrapolation to improve the 
+-- |@romberg k qrule f a b@ uses Romberg extrapolation to improve the 
 -- series of estimates made by a quadrature rule by fitting an order-@k@ 
--- polynomial to (stepsize^2, X) and extrapolating to stepsize=0.  @dh@ is
--- the ratio of stepsizes in successive estimates.
+-- polynomial to (stepsize^2, X) and extrapolating to stepsize=0.  If the
+-- quadrature rule provided does not populate the stepsize field, it is
+-- estimated as the size of the interval divided by the number of points
+-- sampled.
 romberg :: (Fractional a) => Int -> (t -> a -> a -> [Estimate a]) -> t -> a -> a -> [Estimate a]
 romberg k qrule f a b = 
     [ Estimate n h (polyInterp (take k terms) 0)
