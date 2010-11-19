@@ -26,7 +26,7 @@ trapezoidRule f a b = iterate next first
     where
         first = let h0 = (b - a)
                  in Estimate 2 (Just h0) (0.5 * h0 * (f a + f b))
-        next (Estimate !(n+1) (Just !h0) i0) = Estimate (n+n+1) (Just h1) i1
+        next (Estimate !nPts (Just !h0) i0) = Estimate (nPts+nPts-1) (Just h1) i1
             where
                 h1 = 0.5 * h0
                 i1 = 0.5 * i0 + h1 * foldl1' (+) ys
