@@ -52,7 +52,8 @@ integrateRange qRule f a0 a1
 -- the abscissas and weights of the Gauss-Legendre n-point quadrature formula.
 --
 -- Typical values for eps are 1e-15 for Double, 1e-6 for Float.  The specified
--- eps will be approximately the accuracy of the integration method as well.
+-- eps will be approximately the accuracy of the integration method as well,
+-- for suitable integrands.
 gaussLegendre :: (GV.Vector v a, GV.Vector v (a,a), Fractional a, Ord a)
     => a -> a -> Int -> a -> QRule v a
 gaussLegendre x1 x2 n eps = QRule (x1, x2) table
