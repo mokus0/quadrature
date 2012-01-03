@@ -37,7 +37,7 @@ integrate QRule{..} f = Estimate n Nothing $ sum [w * f x | (x, w) <- GV.toList 
 -- |Apply a Gaussian quadrature rule to a function, using user-specified 
 -- endpoints of integration which may differ from those for which the
 -- quadrature rule was originally defined.
-integrateRange :: (GV.Vector v (a,a), Fractional a) => QRule v a -> (a -> a) -> a -> a -> Estimate a
+integrateRange :: (GV.Vector v (a,a), Fractional a, Eq a) => QRule v a -> (a -> a) -> a -> a -> Estimate a
 integrateRange qRule f a0 a1
     | x0 == a0 && x1 == a1  = integrate qRule f
     | otherwise             = integrate qRule f'
