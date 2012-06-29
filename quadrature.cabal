@@ -7,7 +7,7 @@ build-type:             Simple
 
 author:                 James Cook <mokus@deepbondi.net>
 maintainer:             James Cook <mokus@deepbondi.net>
-license:                Unspecified
+license:                PublicDomain
 homepage:               https://github.com/mokus0/quadrature
 
 category:               Math, Numerical
@@ -24,4 +24,4 @@ Library
   hs-source-dirs:       src
   exposed-modules:      Math.Quadrature.Gaussian
                         Math.Quadrature.Simple
-  build-depends:        base >= 3, polynomial, vector
+  build-depends:        base >= 3 && < 5, polynomial, vector
